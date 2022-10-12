@@ -1,0 +1,34 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version("2.7.4")
+}
+
+group 'cz.mateusz'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    springBootVer = "2.7.4"
+    logbackVer = "1.4.3"
+    modelMapperVer = "3.1.0"
+}
+
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter:${springBootVer}",
+                    "org.springframework.boot:spring-boot-starter-web:${springBootVer}",
+                    "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVer}",
+                    "org.springframework.boot:spring-boot-starter-data-mongodb:${springBootVer}",
+                    "org.springframework.boot:spring-boot-starter-security:${springBootVer}")
+    implementation("ch.qos.logback:logback-core:${logbackVer}")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test:${springBootVer}")
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
