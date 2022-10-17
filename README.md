@@ -30,7 +30,7 @@ revision of a spring framework.*
 - Adobe XD (wireframes)
 
 **Auxiliary Tools**
-Postman (Restful/Rest-like API tests)
+- Postman (Restful/Rest-like API tests)
 
 *Feel free to explore and use my code as an example. Should you have any
 remarks please I am always open for a conversation 📨*
