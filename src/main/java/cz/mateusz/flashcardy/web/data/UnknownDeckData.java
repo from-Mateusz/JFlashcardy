@@ -4,7 +4,7 @@ public class UnknownDeckData implements Data {
 
     private String name;
 
-    private String[] labels;
+    private LabelData[] labels;
 
     private Long ownerId;
 
@@ -18,11 +18,11 @@ public class UnknownDeckData implements Data {
         this.name = name;
     }
 
-    public String[] getLabels() {
+    public LabelData[] getLabels() {
         return labels;
     }
 
-    public void setLabels(String[] labels) {
+    public void setLabels(LabelData[] labels) {
         this.labels = labels;
     }
 

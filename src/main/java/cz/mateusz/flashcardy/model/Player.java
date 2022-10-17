@@ -2,12 +2,7 @@ package cz.mateusz.flashcardy.model;
 
 import org.springframework.data.mongodb.core.index.Indexed;
 
-import javax.persistence.Id;
-
-public class Player implements DomainModel {
-
-    @Id
-    private Long id;
+public class Player extends DomainEntity {
 
     @Indexed(name = "player_name_index_asc")
     private String name;
@@ -20,14 +15,6 @@ public class Player implements DomainModel {
         this.name = name;
         this.email = email;
         this.password = password;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    void setId(Long id) {
-        this.id = this.id == null ? id : this.id;
     }
 
     public String getName() {

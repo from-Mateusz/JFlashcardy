@@ -1,6 +1,7 @@
 package cz.mateusz.flashcardy.web.mappers;
 
 import cz.mateusz.flashcardy.model.*;
+import cz.mateusz.flashcardy.web.data.LabelData;
 import cz.mateusz.flashcardy.web.data.UnknownDeckData;
 import cz.mateusz.flashcardy.web.data.UnknownFlashcardData;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,11 @@ public class UnknownDeckDataDeckMapper extends BackwardDataModelMapper<UnknownDe
     @Override
     public Deck from(UnknownDeckData source) throws DataModelMapperException {
         Deck deck = new Deck(source.getName());
-        for(String label : source.getLabels()) deck.addLabel(new Label(label));
+        for(LabelData labelData : source.getLabels()) {
+            Label label = new Label(labelData.getLabel());
+            label.setId(labelData.getId());
+            deck.addLabel(label);
+        };
         for(UnknownFlashcardData flashcard : source.getFlashcards()) deck.addFlashcard(flashcardDataMapper.from(flashcard));
         try {
             Player player = playerSeeker.seekPlayerById(source.getOwnerId());

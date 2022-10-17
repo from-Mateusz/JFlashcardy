@@ -1,5 +1,6 @@
 package cz.mateusz.flashcardy.model;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
@@ -8,21 +9,21 @@ import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
-public class Deck implements Cloneable, SelfCopy<Deck>, DomainModel {
-
-    @Id
-    private Long id;
+@Document
+public class Deck extends DomainEntity implements Cloneable, SelfCopy<Deck> {
 
     @DocumentReference(lazy = true)
     private Player owner;
 
+    @Indexed
     private String name;
 
     @DocumentReference(lazy = true)
     private List<Flashcard> flashcards;
 
-    @DocumentReference
+    @DocumentReference()
     private List<Label> labels;
 
     @Column(name = "Pub")
@@ -32,14 +33,6 @@ public class Deck implements Cloneable, SelfCopy<Deck>, DomainModel {
         this.name = name;
         this.flashcards = new ArrayList<>();
         this.labels = new ArrayList<>();
-    }
-
-    void setId(Long id) {
-        this.id = this.id == null ? id : this.id;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getName() {
@@ -62,6 +55,15 @@ public class Deck implements Cloneable, SelfCopy<Deck>, DomainModel {
 
     public List<Label> getLabels() {
         return Collections.unmodifiableList(labels);
+    }
+
+    public void clearLabels() {
+        labels.clear();
+    }
+
+    public boolean addLabels(Set<Label> labels) {
+        for(Label label: labels) addLabel(label);
+        return this.labels.size() == labels.size();
     }
 
     public boolean addLabel(Label label) {

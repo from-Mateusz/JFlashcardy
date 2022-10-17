@@ -1,5 +1,6 @@
 package cz.mateusz.flashcardy.web;
 
+import cz.mateusz.flashcardy.model.DeckWriter;
 import cz.mateusz.flashcardy.model.Flashcard;
 import cz.mateusz.flashcardy.model.FlashcardWriter;
 import cz.mateusz.flashcardy.web.data.ExistingFlashcardData;
@@ -18,6 +19,9 @@ public class FlashcardController {
     private FlashcardWriter flashcardWriter;
 
     @Autowired
+    private DeckWriter deckWriter;
+
+    @Autowired
     private UnknownFlashcardDataFlashcardMapper flashcardDataFlashcardMapper;
 
     @Autowired
@@ -28,6 +32,7 @@ public class FlashcardController {
     public ExistingFlashcardData createFlashcard(@RequestBody UnknownFlashcardData flashcardData) throws DataModelMapperException {
         Flashcard flashcard = flashcardDataFlashcardMapper.from(flashcardData);
         flashcardWriter.write(flashcard);
+        deckWriter.write(flashcard.getDeck());
         return flashcardExistingFlashcardDataMapper.from(flashcard);
     }
 }

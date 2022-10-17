@@ -1,32 +1,43 @@
 package cz.mateusz.flashcardy.model;
 
-import cz.mateusz.flashcardy.data.CollectionName;
-import cz.mateusz.flashcardy.data.DeckRepository;
-import cz.mateusz.flashcardy.data.IdSequence;
-import cz.mateusz.flashcardy.data.NumericIdSequenceManager;
+import cz.mateusz.flashcardy.data.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.*;
 
 @Service
+@Transactional
 public class DefaultDeckWriter implements DeckWriter {
 
     private DeckRepository deckRepository;
 
+    private LabelRepository labelRepository;
+
+    private DeckLabelsRepository deckLabelsRepository;
+
     private NumericIdSequenceManager idSequenceManager;
 
-    public DefaultDeckWriter(DeckRepository deckRepository, NumericIdSequenceManager idSequenceManager) {
+    public DefaultDeckWriter(DeckRepository deckRepository,
+                             LabelRepository labelRepository,
+                             DeckLabelsRepository deckLabelsRepository,
+                             NumericIdSequenceManager idSequenceManager) {
         this.deckRepository = deckRepository;
+        this.labelRepository = labelRepository;
+        this.deckLabelsRepository = deckLabelsRepository;
         this.idSequenceManager = idSequenceManager;
     }
 
     @Override
     public Deck write(Deck deck) {
-        if(deck.getId() == null) {
-            Optional<IdSequence> possibleIdSequence = idSequenceManager.getNextIdSequence(CollectionName.DECKS);
-            if(possibleIdSequence.isPresent()) deck.setId(possibleIdSequence.get().getNextId());
-        }
+        deck.getLabels().forEach(label -> {
+            if(!label.hasId()) labelRepository.save(label);
+        });
         Deck writtenDeck = deckRepository.save(deck);
+        List<DeckLabels> deckLabels = deck.getLabels().stream()
+                                                      .map(label -> new DeckLabels(writtenDeck, label))
+                                                      .toList();
+        deckLabelsRepository.saveAll(deckLabels);
         return writtenDeck;
     }
 

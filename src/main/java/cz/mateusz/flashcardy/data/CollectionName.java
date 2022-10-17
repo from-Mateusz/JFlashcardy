@@ -6,7 +6,9 @@ public enum CollectionName {
     DECKS("deck"),
     FLASHCARDS("flashcard"),
 
-    LABELS("label");
+    LABELS("label"),
+
+    DECK_LABELS("deck_labels");
 
     private String name;
 

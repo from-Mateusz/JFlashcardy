@@ -11,7 +11,7 @@ public interface IdSequenceManager {
      * @param collection
      * @return
      */
-    Optional<IdSequence> getNextIdSequence(CollectionName collection);
+    Optional<IdSequence> getIdSequence(CollectionName collection);
 
     Optional<IdSequence> undoNextIdSequence(CollectionName collection);
 }

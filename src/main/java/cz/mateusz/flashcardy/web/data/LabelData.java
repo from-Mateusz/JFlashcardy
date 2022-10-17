@@ -1,6 +1,6 @@
 package cz.mateusz.flashcardy.web.data;
 
-public class ExistingLabelData implements Data {
+public class LabelData implements Data {
 
     private Long id;
 

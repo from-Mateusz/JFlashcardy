@@ -3,14 +3,13 @@ package cz.mateusz.flashcardy.data;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
 public class NumericIdSequenceManager implements IdSequenceManager {
 
-    private static final int DEFAULT_ID_DIFFERENCE = 10;
+    private static final Long DEFAULT_ID_DIFFERENCE = 10L;
 
     private IdSequenceRepository sequenceRepository;
 
@@ -19,17 +18,16 @@ public class NumericIdSequenceManager implements IdSequenceManager {
     }
 
     @Override
-    public Optional<IdSequence> getNextIdSequence(CollectionName collection) {
+    public Optional<IdSequence> getIdSequence(CollectionName collection) {
         Optional<IdSequence> possibleIdSequence = sequenceRepository.findSequenceByCollection(collection.getName());
         IdSequence sequence = null;
         if(possibleIdSequence.isPresent()) {
             sequence = possibleIdSequence.get();
-            rotateSequence(sequence);
+
         }
-        else {
-            sequence = new IdSequence(collection.getName(), 1L);
-            sequence = sequenceRepository.save(sequence);
-        }
+        else sequence = new IdSequence(collection.getName(), 0L);
+        rotateSequence(sequence);
+        sequenceRepository.save(sequence);
         return Optional.of(sequence);
     }
 
@@ -39,7 +37,8 @@ public class NumericIdSequenceManager implements IdSequenceManager {
      * @param sequence
      */
     private void rotateSequence(IdSequence sequence) {
-        sequence.setNextId(sequence.getNextId() + DEFAULT_ID_DIFFERENCE);
+        Long nextId =  Double.valueOf(Math.floor(Math.random() * DEFAULT_ID_DIFFERENCE)).longValue() + DEFAULT_ID_DIFFERENCE;
+        sequence.setCurrentId(nextId);
     }
 
     /**
@@ -48,7 +47,7 @@ public class NumericIdSequenceManager implements IdSequenceManager {
      * @param sequence
      */
     private void rotateBackSequence(IdSequence sequence) {
-        sequence.setNextId(sequence.getNextId() - DEFAULT_ID_DIFFERENCE);
+        sequence.setCurrentId(sequence.getCurrentId() - DEFAULT_ID_DIFFERENCE);
     }
 
     @Override

@@ -6,13 +6,11 @@ public class ExistingFlashcardData implements Data {
 
     private String objective;
 
-    private ExistingLabelData[] labels;
-
     private String explanation;
 
-    private String explanationContext;
+    private String context;
 
-    private ExistingExplanationExampleData[] explanationExamples;
+    private ExistingExplanationExampleData[] examples;
 
     public Long getId() {
         return id;
@@ -30,14 +28,6 @@ public class ExistingFlashcardData implements Data {
         this.objective = objective;
     }
 
-    public ExistingLabelData[] getLabels() {
-        return labels;
-    }
-
-    public void setLabels(ExistingLabelData[] labels) {
-        this.labels = labels;
-    }
-
     public String getExplanation() {
         return explanation;
     }
@@ -46,19 +36,19 @@ public class ExistingFlashcardData implements Data {
         this.explanation = explanation;
     }
 
-    public String getExplanationContext() {
-        return explanationContext;
+    public String getContext() {
+        return context;
     }
 
-    public void setExplanationContext(String explanationContext) {
-        this.explanationContext = explanationContext;
+    public void setContext(String context) {
+        this.context = context;
     }
 
-    public ExistingExplanationExampleData[] getExplanationExamples() {
-        return explanationExamples;
+    public ExistingExplanationExampleData[] getExamples() {
+        return examples;
     }
 
-    public void setExplanationExamples(ExistingExplanationExampleData[] explanationExamples) {
-        this.explanationExamples = explanationExamples;
+    public void setExamples(ExistingExplanationExampleData[] examples) {
+        this.examples = examples;
     }
 }

@@ -4,13 +4,11 @@ public class UnknownFlashcardData implements Data {
 
     private String objective;
 
-    private String[] Labels;
-
     private String explanation;
 
-    private String explanationContext;
+    private String context;
 
-    private String[] explanationExamples;
+    private String[] examples;
 
     private Long deckId;
 
@@ -22,14 +20,6 @@ public class UnknownFlashcardData implements Data {
         this.objective = objective;
     }
 
-    public String[] getLabels() {
-        return Labels;
-    }
-
-    public void setLabels(String[] labels) {
-        Labels = labels;
-    }
-
     public String getExplanation() {
         return explanation;
     }
@@ -38,20 +28,20 @@ public class UnknownFlashcardData implements Data {
         this.explanation = explanation;
     }
 
-    public String getExplanationContext() {
-        return explanationContext;
+    public String getContext() {
+        return context;
     }
 
-    public void setExplanationContext(String explanationContext) {
-        this.explanationContext = explanationContext;
+    public void setContext(String context) {
+        this.context = context;
     }
 
-    public String[] getExplanationExamples() {
-        return explanationExamples;
+    public String[] getExamples() {
+        return examples;
     }
 
-    public void setExplanationExamples(String[] explanationExamples) {
-        this.explanationExamples = explanationExamples;
+    public void setExamples(String[] examples) {
+        this.examples = examples;
     }
 
     public Long getDeckId() {

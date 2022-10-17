@@ -2,7 +2,7 @@ package cz.mateusz.flashcardy.model;
 
 import java.util.Objects;
 
-public class Example implements Cloneable, SelfCopy<Example>, DomainModel {
+public class Example implements Cloneable, SelfCopy<Example> {
 
     private String content;
 

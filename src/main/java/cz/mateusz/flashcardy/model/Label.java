@@ -1,25 +1,18 @@
 package cz.mateusz.flashcardy.model;
 
-import javax.persistence.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.Objects;
 
-public class Label implements SelfCopy<Label>, DomainModel {
+@Document
+public class Label extends DomainEntity implements SelfCopy<Label> {
 
-    @Id
-    private Long id;
-
+    @Indexed(unique = true)
     private String content;
 
     public Label(String content) {
         this.content = content;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public void setContent(String content) {

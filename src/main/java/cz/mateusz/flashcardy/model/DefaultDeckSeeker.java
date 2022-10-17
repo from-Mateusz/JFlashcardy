@@ -21,6 +21,11 @@ public class DefaultDeckSeeker implements DeckSeeker {
     }
 
     @Override
+    public List<Deck> seekById(Long[] id) {
+        return deckRepository.findAllWithId(id);
+    }
+
+    @Override
     public List<Deck> seekEveryPublishedDeck() {
         return deckRepository.findPublished(true);
     }
@@ -33,5 +38,10 @@ public class DefaultDeckSeeker implements DeckSeeker {
     @Override
     public List<Deck> seekEveryDeck(Long ownerId) {
         return deckRepository.findByOwnerId(ownerId);
+    }
+
+    @Override
+    public List<Deck> seekEachIncludingPhrase(String phrase) {
+        return deckRepository.findEachDeckIncludingPhrase(phrase);
     }
 }

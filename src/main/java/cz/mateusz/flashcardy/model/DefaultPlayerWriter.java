@@ -22,12 +22,7 @@ public class DefaultPlayerWriter implements PlayerWriter {
 
     @Override
     public Player write(Player player) {
-        if(player.getId() == null) {
-            Optional<IdSequence> playerIdSequence = idSequenceManager.getNextIdSequence(CollectionName.PLAYERS);
-            if(playerIdSequence.isPresent()) player.setId(playerIdSequence.get().getNextId());
-        }
-        Player writtenPlayer = playerRepository.save(player);
-        return writtenPlayer;
+        return playerRepository.save(player);
     }
 
     @Override

@@ -11,6 +11,8 @@ public class Explanation implements Cloneable, SelfCopy<Explanation> {
     private String context;
     private List<Example> examples;
 
+    public Explanation() {}
+
     public Explanation(String content, String context) {
         this(content);
         this.context = context;

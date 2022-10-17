@@ -3,7 +3,9 @@ package cz.mateusz.flashcardy.model;
 import cz.mateusz.flashcardy.data.*;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class DefaultFlashcardWriter implements FlashcardWriter {
@@ -22,14 +24,6 @@ public class DefaultFlashcardWriter implements FlashcardWriter {
 
     @Override
     public Flashcard write(Flashcard flashcard) {
-        if(flashcard.getId() == null) {
-            Optional<IdSequence> flashcardIdSequence = numericIdSequenceManager.getNextIdSequence(CollectionName.FLASHCARDS);
-            if(flashcardIdSequence.isPresent()) flashcard.setId(flashcardIdSequence.get().getNextId());
-        }
-        for(Label label : flashcard.getLabels()) {
-            Optional<IdSequence> labelIdSequence = numericIdSequenceManager.getNextIdSequence(CollectionName.LABELS);
-            if(labelIdSequence.isPresent()) label.setId(labelIdSequence.get().getNextId());
-        }
         return flashcardRepository.save(flashcard);
     }
 

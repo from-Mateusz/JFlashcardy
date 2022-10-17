@@ -8,7 +8,7 @@ public class ExistingDeckData implements Data {
 
     private Long ownerId;
 
-    private ExistingLabelData[] labels;
+    private LabelData[] labels;
 
     private ExistingFlashcardData[] flashcards;
 
@@ -36,11 +36,11 @@ public class ExistingDeckData implements Data {
         this.ownerId = ownerId;
     }
 
-    public ExistingLabelData[] getLabels() {
+    public LabelData[] getLabels() {
         return labels;
     }
 
-    public void setLabels(ExistingLabelData[] labels) {
+    public void setLabels(LabelData[] labels) {
         this.labels = labels;
     }
 

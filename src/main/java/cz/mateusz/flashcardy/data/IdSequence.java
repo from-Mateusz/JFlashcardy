@@ -1,17 +1,20 @@
 package cz.mateusz.flashcardy.data;
 
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class IdSequence {
 
+    @Id
     private String collection;
 
-    private Long nextId;
+    private Long currentId;
 
-    public IdSequence(String collection, Long nextId) {
+    public IdSequence(String collection, Long currentId) {
         this.collection = collection;
-        this.nextId = nextId;
+        this.currentId = currentId;
     }
 
     public String getCollection() {
@@ -22,11 +25,11 @@ public class IdSequence {
         this.collection = collection;
     }
 
-    public Long getNextId() {
-        return nextId;
+    public Long getCurrentId() {
+        return currentId;
     }
 
-    public void setNextId(Long nextId) {
-        this.nextId = nextId;
+    public void setCurrentId(Long currentId) {
+        this.currentId = currentId;
     }
 }
