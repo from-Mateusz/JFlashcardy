@@ -1,6 +1,5 @@
 package cz.mateusz.flashcardy.web.mappers;
 
-import cz.mateusz.flashcardy.helpers.PushPullArray;
 import cz.mateusz.flashcardy.model.Deck;
 import cz.mateusz.flashcardy.model.Label;
 import cz.mateusz.flashcardy.web.data.ExistingDeckData;

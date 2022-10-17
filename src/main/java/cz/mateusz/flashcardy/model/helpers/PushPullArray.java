@@ -1,4 +1,4 @@
-package cz.mateusz.flashcardy.helpers;
+package cz.mateusz.flashcardy.model.helpers;
 
 public class PushPullArray<E> {
 
