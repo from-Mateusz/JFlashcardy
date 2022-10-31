@@ -8,6 +8,8 @@ public class Password {
 
     private String secret;
 
+    private String salt;
+
     private boolean secured;
 
     public Password(String secret, boolean secured) {
@@ -16,12 +18,14 @@ public class Password {
     }
 
     public static Password unsecured(String secret) throws UnsafePasswordException {
-        if(!isSafe(secret)) throw new UnsafePasswordException(secret);
+//        if(!isSafe(secret)) throw new UnsafePasswordException(secret);
         return new Password(secret, false);
     }
 
-    public static Password secured(String secret) {
-        return new Password(secret, true);
+    public static Password secured(String secret, String salt) {
+        Password password = new Password(secret, true);
+        password.setSalt(salt);
+        return password;
     }
 
     public static boolean isSafe(String secret) {
@@ -30,6 +34,14 @@ public class Password {
 
     public String getSecret() {
         return secret;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public boolean isSecured() {

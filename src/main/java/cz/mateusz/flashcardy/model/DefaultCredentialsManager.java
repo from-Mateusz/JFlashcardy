@@ -29,11 +29,16 @@ public class DefaultCredentialsManager implements CredentialsManager {
     }
 
     @Override
+    public void comparePasswords(Password plainPw, Password encodedPw) throws AsymmetricalPasswordException {
+        if(!passwordEncoder.compare(plainPw, encodedPw)) throw new AsymmetricalPasswordException();
+    }
+
+    @Override
     public boolean changePassword(Long ownerId, Password newPassword) throws UnknownPlayerException {
         Optional<Player> possibleOwner = playerRepository.findById(ownerId);
         if(!possibleOwner.isPresent()) throw new UnknownPlayerException(ownerId);
         Player owner = possibleOwner.get();
-        if(!newPassword.isSecured()) owner.changePassword(Password.secured(passwordEncoder.encode(newPassword.getSecret())));
+        if(!newPassword.isSecured()) owner.changePassword(passwordEncoder.encode(newPassword.getSecret()));
         else owner.changePassword(newPassword);
         return true;
     }

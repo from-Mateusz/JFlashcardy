@@ -1,6 +1,6 @@
 package cz.mateusz.flashcardy.model;
 
-public class UnknownPlayerException extends Exception {
+public class UnknownPlayerException extends DomainException {
 
     private Long playerId;
 

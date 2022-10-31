@@ -5,9 +5,11 @@ import java.util.Optional;
 
 public interface DeckSeeker {
 
-    Optional<Deck> seekById(Long id);
+    Deck seekDeckById(Long id) throws UnknownDeckException;
 
-    List<Deck> seekById(Long[] id);
+    Deck seekPublishedDeckById(Long id) throws UnknownDeckException, NonPublishedDeckException;
+
+    List<Deck> seekDecksById(Long[] id);
 
     List<Deck> seekEveryPublishedDeck();
 

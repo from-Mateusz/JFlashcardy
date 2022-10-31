@@ -1,8 +1,11 @@
 package cz.mateusz.flashcardy.model;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.Objects;
 
-public class Example implements Cloneable, SelfCopy<Example> {
+@Document("examples")
+public class Example extends DomainEntity implements Cloneable, SelfCopy<Example> {
 
     private String content;
 

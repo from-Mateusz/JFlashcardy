@@ -25,10 +25,9 @@ public class FlashcardExistingFlashcardDataMapper extends ForwardDataModelMapper
     public ExistingFlashcardData from(Flashcard source) throws DataModelMapperException {
         ExistingFlashcardData existingFlashcardData = new ExistingFlashcardData();
         existingFlashcardData.setId(source.getId());
-        existingFlashcardData.setObjective(source.getObjective().getContent());
+        existingFlashcardData.setObjective(source.getObjective());
 
         existingFlashcardData.setExplanation(source.getExplanationContent());
-        existingFlashcardData.setContext(source.getExplanationContext());
         final List<Example> explanationExamples = source.getExplanation().getExamples();
         ExistingExplanationExampleData examplesData[] = new ExistingExplanationExampleData[source.getExamples().size()];
 

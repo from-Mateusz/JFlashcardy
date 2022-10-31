@@ -4,9 +4,11 @@ import cz.mateusz.flashcardy.model.Flashcard;
 import cz.mateusz.flashcardy.model.Player;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Component
 public class BeforePlayerSaveEventListener extends AbstractMongoEventListener<Player> {
 
     private NumericIdSequenceManager idSequenceManager;

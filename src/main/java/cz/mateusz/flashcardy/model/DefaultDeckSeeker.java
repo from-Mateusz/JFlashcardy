@@ -16,12 +16,21 @@ public class DefaultDeckSeeker implements DeckSeeker {
     }
 
     @Override
-    public Optional<Deck> seekById(Long id) {
-        return deckRepository.findById(id);
+    public Deck seekDeckById(Long id) throws UnknownDeckException {
+        Optional<Deck> possibleDeck = deckRepository.findById(id);
+        if(!possibleDeck.isPresent()) throw new UnknownDeckException(id);
+        return possibleDeck.get();
     }
 
     @Override
-    public List<Deck> seekById(Long[] id) {
+    public Deck seekPublishedDeckById(Long id) throws UnknownDeckException, NonPublishedDeckException {
+        Deck deck = seekDeckById(id);
+        if(!deck.isPublished()) throw new NonPublishedDeckException(id);
+        return deck;
+    }
+
+    @Override
+    public List<Deck> seekDecksById(Long[] id) {
         return deckRepository.findAllWithId(id);
     }
 

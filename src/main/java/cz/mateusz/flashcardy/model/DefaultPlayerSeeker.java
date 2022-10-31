@@ -24,7 +24,9 @@ public class DefaultPlayerSeeker implements PlayerSeeker {
 
     @Override
     public Player seekPlayerByEmail(String email) throws UnknownPlayerException {
-        return null;
+        Optional<Player> possiblePlayer = playerRepository.findByEmail(email);
+        if(!possiblePlayer.isPresent()) throw new UnknownPlayerException(email);
+        return possiblePlayer.get();
     }
 
     @Override

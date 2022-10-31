@@ -1,7 +1,11 @@
 package cz.mateusz.flashcardy.security;
 
-public interface PasswordEncoder {
-    String encode(String password);
+import cz.mateusz.flashcardy.model.Password;
 
-    boolean compare(String plain, String encoded);
+public interface PasswordEncoder {
+    Password encode(String password);
+
+    Password encode(String password, String salt);
+
+    boolean compare(Password plain, Password encoded);
 }

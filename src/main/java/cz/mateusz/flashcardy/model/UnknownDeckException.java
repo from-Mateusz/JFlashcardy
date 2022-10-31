@@ -1,6 +1,6 @@
 package cz.mateusz.flashcardy.model;
 
-public class UnknownDeckException extends Exception {
+public class UnknownDeckException extends DomainException {
 
     private Long deckId;
 

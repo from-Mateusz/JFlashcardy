@@ -20,7 +20,7 @@ public class NewPlayerDataPlayerMapper extends BackwardDataModelMapper<NewPlayer
             Password plainPassword = Password.unsecured(source.getPassword());
             Player player = new Player(source.getName(),
                                         new Email(source.getEmail()),
-                                        Password.secured(passwordEncoder.encode(plainPassword.getSecret())));
+                                        passwordEncoder.encode(source.getPassword()));
             return player;
         } catch (IncorrectEmailAddressException | UnsafePasswordException ex) {
             throw new DataModelMapperException(ex);

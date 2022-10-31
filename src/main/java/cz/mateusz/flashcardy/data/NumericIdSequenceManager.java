@@ -37,7 +37,7 @@ public class NumericIdSequenceManager implements IdSequenceManager {
      * @param sequence
      */
     private void rotateSequence(IdSequence sequence) {
-        Long nextId =  Double.valueOf(Math.floor(Math.random() * DEFAULT_ID_DIFFERENCE)).longValue() + DEFAULT_ID_DIFFERENCE;
+        Long nextId =  Double.valueOf(Math.floor(Math.random() * DEFAULT_ID_DIFFERENCE)).longValue() + sequence.getCurrentId();
         sequence.setCurrentId(nextId);
     }
 

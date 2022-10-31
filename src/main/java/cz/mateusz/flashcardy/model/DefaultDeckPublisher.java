@@ -16,10 +16,11 @@ public class DefaultDeckPublisher implements DeckPublisher {
 
     @Override
     public Deck publish(Long deckId, boolean resign) throws UnknownDeckException {
-        Optional<Deck> possibleDeckToBePublished = deckRepository.findById(deckId);
-        if(!possibleDeckToBePublished.isPresent()) throw new UnknownDeckException(deckId);
-        Deck deckToBePublished = possibleDeckToBePublished.get();
-        deckToBePublished.setPublished(true);
-        return deckToBePublished;
+        Optional<Deck> possibleDeck = deckRepository.findById(deckId);
+        if(!possibleDeck.isPresent()) throw new UnknownDeckException(deckId);
+        Deck publishableDeck = possibleDeck.get();
+        publishableDeck.setPublished(resign ? false : true);
+        deckRepository.save(publishableDeck);
+        return publishableDeck;
     }
 }

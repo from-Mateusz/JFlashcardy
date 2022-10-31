@@ -26,7 +26,7 @@ public class UnknownDeckDataDeckMapper extends BackwardDataModelMapper<UnknownDe
             label.setId(labelData.getId());
             deck.addLabel(label);
         };
-        for(UnknownFlashcardData flashcard : source.getFlashcards()) deck.addFlashcard(flashcardDataMapper.from(flashcard));
+        deck.setPublished(source.isPublished());
         try {
             Player player = playerSeeker.seekPlayerById(source.getOwnerId());
             deck.setOwner(player);

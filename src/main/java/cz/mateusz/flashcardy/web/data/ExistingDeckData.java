@@ -12,6 +12,8 @@ public class ExistingDeckData implements Data {
 
     private ExistingFlashcardData[] flashcards;
 
+    private boolean published;
+
     public Long getId() {
         return id;
     }
@@ -50,5 +52,13 @@ public class ExistingDeckData implements Data {
 
     public void setFlashcards(ExistingFlashcardData[] flashcards) {
         this.flashcards = flashcards;
+    }
+
+    public boolean isPublished() {
+        return published;
+    }
+
+    public void setPublished(boolean published) {
+        this.published = published;
     }
 }

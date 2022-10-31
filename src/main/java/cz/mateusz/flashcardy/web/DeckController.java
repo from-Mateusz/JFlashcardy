@@ -1,8 +1,6 @@
 package cz.mateusz.flashcardy.web;
 
-import cz.mateusz.flashcardy.model.Deck;
-import cz.mateusz.flashcardy.model.DeckSeeker;
-import cz.mateusz.flashcardy.model.DeckWriter;
+import cz.mateusz.flashcardy.model.*;
 import cz.mateusz.flashcardy.web.data.ExistingDeckData;
 import cz.mateusz.flashcardy.web.data.UnknownDeckData;
 import cz.mateusz.flashcardy.web.mappers.*;
@@ -20,6 +18,9 @@ public class DeckController {
 
     @Autowired
     private DeckSeeker deckSeeker;
+
+    @Autowired
+    private DeckPublisher deckPublisher;
 
     @Autowired
     private UnknownDeckDataDeckMapper unknownDeckDataDeckMapper;
@@ -53,5 +54,31 @@ public class DeckController {
         ExistingDeckData[] mappedDecks = new ExistingDeckData[decks.size()];
         for(int i = 0; i < decks.size(); i++) mappedDecks[i] = deckDeckDataMapper.from(decks.get(i));
         return mappedDecks;
+    }
+
+    @PutMapping("/publish/{deckId}")
+    public ExistingDeckData publishDeck(@PathVariable Long deckId, @RequestParam(name = "resign", defaultValue = "false") boolean resign) throws UnknownDeckException, DataModelMapperException {
+        Deck publishedDeck = deckPublisher.publish(deckId, resign);
+        ExistingDeckData mappedPublishedDeck = deckDeckDataMapper.from(publishedDeck);
+        return mappedPublishedDeck;
+    }
+
+    @GetMapping("/published/all")
+    public ExistingDeckData[] publishDeck() throws DataModelMapperException {
+        List<Deck> decks = deckSeeker.seekEveryPublishedDeck();
+        ExistingDeckData[] mappedPublishedDecks = new ExistingDeckData[decks.size()];
+        for(int i = 0; i < decks.size(); i++) mappedPublishedDecks[i] = deckDeckDataMapper.from(decks.get(i));
+        return mappedPublishedDecks;
+    }
+
+    @PostMapping("/copy/{deckId}")
+    public ExistingDeckData copyPublishedDeck(@PathVariable Long deckId) throws UnknownDeckException,
+                                                                                    NonPublishedDeckException,
+                                                                                    DataModelMapperException {
+        Deck publishedDeck = deckSeeker.seekPublishedDeckById(deckId);
+        Deck deckCopy = publishedDeck.copySelf();
+        Deck writtenCopiedDeck = deckWriter.write(deckCopy);
+        ExistingDeckData mappedCopiedDeck = deckDeckDataMapper.from(deckCopy);
+        return mappedCopiedDeck;
     }
 }

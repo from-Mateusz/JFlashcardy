@@ -1,5 +1,6 @@
 package cz.mateusz.flashcardy.security;
 
+import cz.mateusz.flashcardy.model.Password;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
@@ -7,13 +8,18 @@ import org.springframework.stereotype.Service;
 public class BCryptPasswordEncoder implements PasswordEncoder {
 
     @Override
-    public String encode(String password) {
+    public Password encode(String password) {
         String salt = BCrypt.gensalt(5);
-        return BCrypt.hashpw(password, salt);
+        return Password.secured(BCrypt.hashpw(password, salt), salt);
     }
 
     @Override
-    public boolean compare(String plain, String encoded) {
-        return BCrypt.checkpw(plain, encoded);
+    public Password encode(String password, String salt) {
+        return Password.secured(BCrypt.hashpw(password, salt), salt);
+    }
+
+    @Override
+    public boolean compare(Password plain, Password encoded) {
+        return BCrypt.checkpw(plain.getSecret(), encoded.getSecret());
     }
 }

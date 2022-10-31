@@ -3,15 +3,11 @@ package cz.mateusz.flashcardy.model;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-@Document
+@Document("decks")
 public class Deck extends DomainEntity implements Cloneable, SelfCopy<Deck> {
 
     @DocumentReference(lazy = true)
@@ -23,10 +19,10 @@ public class Deck extends DomainEntity implements Cloneable, SelfCopy<Deck> {
     @DocumentReference(lazy = true)
     private List<Flashcard> flashcards;
 
-    @DocumentReference()
+    @DocumentReference
     private List<Label> labels;
 
-    @Column(name = "Pub")
+    @Field(value = "published", write = Field.Write.ALWAYS)
     private Boolean published;
 
     public Deck(String name) {
@@ -91,6 +87,21 @@ public class Deck extends DomainEntity implements Cloneable, SelfCopy<Deck> {
         Deck copy = new Deck(name);
         for(Flashcard flashcard : flashcards) copy.addFlashcard(flashcard.copySelf());
         for(Label label : labels) copy.addLabel(label);
+        copy.setPublished(false);
         return copy;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Deck deck = (Deck) o;
+        return Objects.equals(owner, deck.owner) && Objects.equals(name, deck.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), owner, name);
     }
 }

@@ -23,6 +23,7 @@ public class DeckDeckDataMapper extends ForwardDataModelMapper<Deck, ExistingDec
         data.setId(source.getId());
         data.setName(source.getName());
         data.setOwnerId(source.getOwner().getId());
+        data.setPublished(source.isPublished());
         data.setFlashcards(null);
         List<Label> labels = source.getLabels();
         LabelData[] labelData = new LabelData[labels.size()];

@@ -1,6 +1,7 @@
 package cz.mateusz.flashcardy.web.mappers;
 
 import cz.mateusz.flashcardy.model.DomainEntity;
+import cz.mateusz.flashcardy.model.DomainException;
 import cz.mateusz.flashcardy.web.data.Data;
 
 /**
@@ -9,5 +10,5 @@ import cz.mateusz.flashcardy.web.data.Data;
  * We can envision this as a walk with a load from the lower application layers to the upper ones.
  */
 public abstract class ForwardDataModelMapper<S, D extends Data> implements DataModelMapper<S, D> {
-    public abstract D from(S source) throws DataModelMapperException;
+    public abstract D from(S source) throws DataModelMapperException, DomainException;
 }

@@ -6,28 +6,31 @@ import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import javax.persistence.Id;
 import java.util.*;
 
-@Document
+@Document("flashcards")
 public class Flashcard extends DomainEntity implements Cloneable, SelfCopy<Flashcard> {
 
-    private Objective objective;
+    private String objective;
 
     private Explanation explanation;
 
     @DocumentReference(lazy = true)
     private Deck deck;
 
+    @DocumentReference(lazy = true)
+    private List<Example> examples;
+
     public Flashcard() {}
 
-    public Flashcard(Objective objective, Explanation explanation) {
+    public Flashcard(String objective, Explanation explanation) {
         this.objective = objective;
         this.explanation = explanation;
     }
 
-    public Objective getObjective() {
+    public String getObjective() {
         return objective;
     }
 
-    public void setObjective(Objective objective) {
+    public void setObjective(String objective) {
         this.objective = objective;
     }
 
@@ -48,16 +51,8 @@ public class Flashcard extends DomainEntity implements Cloneable, SelfCopy<Flash
         explanation = null;
     }
 
-    public String getObjectiveContent() {
-        return objective.getContent();
-    }
-
     public String getExplanationContent() {
         return explanation.getContent();
-    }
-
-    public String getExplanationContext() {
-        return explanation.getContext();
     }
 
     public List<Example> getExamples() {
@@ -78,14 +73,14 @@ public class Flashcard extends DomainEntity implements Cloneable, SelfCopy<Flash
         Flashcard clone = (Flashcard) super.clone();
         clone.clearExplanation();
         clone.clearObjective();
-        clone.setObjective((Objective) objective.clone());
+        clone.setObjective(objective);
         clone.setExplanation((Explanation) explanation.clone());
         return clone;
     }
 
     @Override
     public Flashcard copySelf() {
-        Flashcard copy = new Flashcard(objective.copySelf(), explanation.copySelf());
+        Flashcard copy = new Flashcard(objective, explanation.copySelf());
         return copy;
     }
 

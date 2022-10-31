@@ -33,12 +33,21 @@ public class DefaultDeckWriter implements DeckWriter {
         deck.getLabels().forEach(label -> {
             if(!label.hasId()) labelRepository.save(label);
         });
-        Deck writtenDeck = deckRepository.save(deck);
         List<DeckLabels> deckLabels = deck.getLabels().stream()
-                                                      .map(label -> new DeckLabels(writtenDeck, label))
-                                                      .toList();
-        deckLabelsRepository.saveAll(deckLabels);
-        return writtenDeck;
+                                            .map(label -> new DeckLabels(deck, label))
+                                            .toList();
+        if(!deck.hasId()) {
+            Deck writtenDeck = deckRepository.save(deck);
+            deckLabelsRepository.saveAll(deckLabels);
+            return writtenDeck;
+        }
+        else {
+            List<DeckLabels> existingDeckLabels = deckLabelsRepository.findAllByDeckId(deck.getId());
+            existingDeckLabels.removeAll(deckLabels);
+            deckLabelsRepository.saveAll(deckLabels);
+            Deck writtenDeck = deckRepository.save(deck);
+            return writtenDeck;
+        }
     }
 
     @Override

@@ -8,8 +8,6 @@ public class ExistingFlashcardData implements Data {
 
     private String explanation;
 
-    private String context;
-
     private ExistingExplanationExampleData[] examples;
 
     public Long getId() {
@@ -34,14 +32,6 @@ public class ExistingFlashcardData implements Data {
 
     public void setExplanation(String explanation) {
         this.explanation = explanation;
-    }
-
-    public String getContext() {
-        return context;
-    }
-
-    public void setContext(String context) {
-        this.context = context;
     }
 
     public ExistingExplanationExampleData[] getExamples() {

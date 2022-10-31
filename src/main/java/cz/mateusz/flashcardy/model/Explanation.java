@@ -8,15 +8,9 @@ public class Explanation implements Cloneable, SelfCopy<Explanation> {
 
     private String content;
 
-    private String context;
     private List<Example> examples;
 
     public Explanation() {}
-
-    public Explanation(String content, String context) {
-        this(content);
-        this.context = context;
-    }
 
     public Explanation(String content) {
         this.content = content;
@@ -31,17 +25,10 @@ public class Explanation implements Cloneable, SelfCopy<Explanation> {
         this.content = content;
     }
 
-    public void editContext(String context) {
-        this.context = context;
-    }
-
     public void addExample(Example example) {
         this.examples.add(example);
     }
 
-    public String getContext() {
-        return context;
-    }
 
     public List<Example> getExamples() {
         return examples;
@@ -61,7 +48,7 @@ public class Explanation implements Cloneable, SelfCopy<Explanation> {
 
     @Override
     public Explanation copySelf() {
-        Explanation explanation = new Explanation(content, context);
+        Explanation explanation = new Explanation(content);
         for(Example example : examples) explanation.addExample(example.copySelf());
         return explanation;
     }
@@ -71,11 +58,11 @@ public class Explanation implements Cloneable, SelfCopy<Explanation> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Explanation that = (Explanation) o;
-        return Objects.equals(content, that.content) && Objects.equals(context, that.context);
+        return Objects.equals(content, that.content);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(content, context);
+        return Objects.hash(content);
     }
 }

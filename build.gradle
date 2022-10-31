@@ -21,8 +21,10 @@ dependencies {
                     "org.springframework.boot:spring-boot-starter-web:${springBootVer}",
                     "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVer}",
                     "org.springframework.boot:spring-boot-starter-data-mongodb:${springBootVer}",
-                    "org.springframework.boot:spring-boot-starter-security:${springBootVer}")
-    implementation("ch.qos.logback:logback-core:${logbackVer}")
+                    "org.springframework.boot:spring-boot-starter-security:${springBootVer}",
+                    "org.springframework.boot:spring-boot-starter-logging:${springBootVer}")
+    implementation('com.auth0:java-jwt:+');
+    implementation ('com.fasterxml.jackson.core:jackson-databind:+')
 
     testImplementation("org.springframework.boot:spring-boot-starter-test:${springBootVer}")
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'

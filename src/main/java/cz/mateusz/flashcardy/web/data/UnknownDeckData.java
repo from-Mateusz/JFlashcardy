@@ -8,6 +8,8 @@ public class UnknownDeckData implements Data {
 
     private Long ownerId;
 
+    private boolean published;
+
     private UnknownFlashcardData[] flashcards;
 
     public String getName() {
@@ -40,5 +42,13 @@ public class UnknownDeckData implements Data {
 
     public void setFlashcards(UnknownFlashcardData[] flashcards) {
         this.flashcards = flashcards;
+    }
+
+    public boolean isPublished() {
+        return published;
+    }
+
+    public void setPublished(boolean published) {
+        this.published = published;
     }
 }

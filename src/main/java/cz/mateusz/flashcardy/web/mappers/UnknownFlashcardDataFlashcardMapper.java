@@ -16,13 +16,12 @@ public class UnknownFlashcardDataFlashcardMapper extends BackwardDataModelMapper
     }
 
     @Override
-    public Flashcard from(UnknownFlashcardData source) throws DataModelMapperException {
-        Objective objective = new Objective(source.getObjective());
-        Explanation explanation = new Explanation(source.getExplanation(), source.getContext());
+    public Flashcard from(UnknownFlashcardData source) throws DataModelMapperException, UnknownDeckException {
+        Explanation explanation = new Explanation(source.getExplanation());
         for(String exampleContent : source.getExamples()) explanation.addExample(new Example(exampleContent));
-        Flashcard flashcard = new Flashcard(objective, explanation);
-        Optional<Deck> possibleDeck = deckSeeker.seekById(source.getDeckId());
-        if(possibleDeck.isPresent()) flashcard.setDeck(possibleDeck.get());
+        Flashcard flashcard = new Flashcard(source.getObjective(), explanation);
+        Deck deck = deckSeeker.seekDeckById(source.getDeckId());
+        flashcard.setDeck(deck);
         return flashcard;
     }
 }
