@@ -2,10 +2,12 @@ package cz.mateusz.flashcardy.security;
 
 import cz.mateusz.flashcardy.exception.UnsetSecretKeyException;
 import cz.mateusz.flashcardy.model.*;
+import cz.mateusz.flashcardy.players.model.Password;
+import cz.mateusz.flashcardy.players.model.Player;
+import cz.mateusz.flashcardy.players.PlayerSeeker;
 import org.springframework.security.authentication.AuthenticationEventPublisher;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -47,13 +49,14 @@ public class PlayerAuthenticationProvider implements AuthenticationProvider {
             Player player = playerSeeker.seekPlayerByEmail(email);
             credentialsManager.comparePasswords(Password.unsecured(password), player.getPassword());
             String token = jwtManager.get(email);
-            this.keepAuthenticated(player, token);
+            JWTAuthentication jwtAuthentication = this.createJWTAuthentication(player, token);
+            populateSecurityContext(jwtAuthentication);
+            return jwtAuthentication;
         } catch (UnknownPlayerException | UnsafePasswordException | AsymmetricalPasswordException |
                  UnsetSecretKeyException ex) {
             handleDifferentAuthenticationException(ex, authentication);
-            throw new BadCredentialsException("Authentication Failure");
+            throw new BadCredentialsException("Authentication Failure", ex);
         }
-        return new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials(), List.of(new SimpleGrantedAuthority("PLAYER")));
     }
 
     private void handleDifferentAuthenticationException(Exception ex, Authentication auth) {
@@ -61,17 +64,20 @@ public class PlayerAuthenticationProvider implements AuthenticationProvider {
     }
 
     /**
-     * We assume that every player simply has role PLAYER. Further, in the process we ought to base on his/her permission set.
+     * We assume that every player simply has a role PLAYER. Further, in the process we ought to base on his/her permission set.
      * @param player
      * @param token
      */
-    private void keepAuthenticated(Player player, String token) {
+    private JWTAuthentication createJWTAuthentication(Player player, String token) {
+        return new JWTAuthentication(player.getEmailAddress(),
+                "",
+                List.of(new SimpleGrantedAuthority("PLAYER")),
+                token);
+    }
+
+    private void populateSecurityContext(JWTAuthentication authentication) {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-        JWTAuthentication jwtAuthentication = new JWTAuthentication(player.getPassword(),
-                                                                    "",
-                                                                    List.of(new SimpleGrantedAuthority("PLAYER")),
-                                                                    token);
-        securityContext.setAuthentication(jwtAuthentication);
+        securityContext.setAuthentication(authentication);
         SecurityContextHolder.setContext(securityContext);
     }
 

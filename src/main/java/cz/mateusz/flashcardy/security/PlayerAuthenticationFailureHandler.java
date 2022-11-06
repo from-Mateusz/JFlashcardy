@@ -13,16 +13,10 @@ import java.io.IOException;
 public class PlayerAuthenticationFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-
+        response.sendRedirect(buildExceptionUrl(exception));
     }
 
-    private static class AuthenticationFailure {
-        private boolean authenticated = false;
-
-        private String moveTo = "/";
-
-        public boolean isAuthenticated() {
-            return authenticated;
-        }
+    private String buildExceptionUrl(AuthenticationException exception) {
+        return "/api/auth/error?ex=" + exception.getCause().getMessage();
     }
 }

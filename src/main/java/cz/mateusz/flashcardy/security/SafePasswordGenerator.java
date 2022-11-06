@@ -1,6 +1,6 @@
 package cz.mateusz.flashcardy.security;
 
-import cz.mateusz.flashcardy.model.Password;
+import cz.mateusz.flashcardy.players.model.Password;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;

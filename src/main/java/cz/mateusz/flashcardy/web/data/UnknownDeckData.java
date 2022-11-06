@@ -1,5 +1,7 @@
 package cz.mateusz.flashcardy.web.data;
 
+import cz.mateusz.flashcardy.web.data.modification.LabelData;
+
 public class UnknownDeckData implements Data {
 
     private String name;

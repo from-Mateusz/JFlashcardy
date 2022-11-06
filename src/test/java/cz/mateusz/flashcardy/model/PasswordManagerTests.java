@@ -1,11 +1,6 @@
 package cz.mateusz.flashcardy.model;
 
-import cz.mateusz.flashcardy.security.SafePasswordGenerator;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.MatcherAssert.*;
+import cz.mateusz.flashcardy.security.CredentialsManager;
 
 public class PasswordManagerTests {
 

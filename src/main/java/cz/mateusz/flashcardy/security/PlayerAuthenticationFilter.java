@@ -9,7 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import javax.servlet.ServletInputStream;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -25,12 +25,16 @@ public class PlayerAuthenticationFilter extends UsernamePasswordAuthenticationFi
     }
 
     @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        super.doFilter(request, response, chain);
+    }
+
+    @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try(ServletInputStream is = request.getInputStream()) {
             PlayerCredentials playerCredentials = oMapper.readValue(request.getInputStream(), PlayerCredentials.class);
             return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(playerCredentials.email,
                                                             playerCredentials.password, Collections.emptyList()));
-
         } catch (JsonProcessingException ex) {
             throw new AuthenticationServiceException("");
         } catch (IOException ex) {

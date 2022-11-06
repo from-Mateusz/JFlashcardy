@@ -1,7 +1,8 @@
 package cz.mateusz.flashcardy.data;
 
 import cz.mateusz.flashcardy.FlashcardyApplication;
-import cz.mateusz.flashcardy.model.Player;
+import cz.mateusz.flashcardy.players.data.PlayerRepository;
+import cz.mateusz.flashcardy.players.model.Player;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

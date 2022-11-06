@@ -1,5 +1,7 @@
 package cz.mateusz.flashcardy.model;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.util.Objects;

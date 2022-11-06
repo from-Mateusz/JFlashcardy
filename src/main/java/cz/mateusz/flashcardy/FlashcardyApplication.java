@@ -14,10 +14,7 @@ import org.springframework.context.annotation.Profile;
 )
 public class FlashcardyApplication {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger("FlashcardyApplicationLogger");
-
     public static void main(String...args) {
         SpringApplication.run(FlashcardyApplication.class, args);
-        LOGGER.info("Flashcardy Application has come to live");
     }
 }

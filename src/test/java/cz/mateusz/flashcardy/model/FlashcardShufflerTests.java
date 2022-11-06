@@ -1,5 +1,8 @@
 package cz.mateusz.flashcardy.model;
 
+import cz.mateusz.flashcardy.decks.Explanation;
+import cz.mateusz.flashcardy.decks.Flashcard;
+import cz.mateusz.flashcardy.decks.services.SimpleFlashcardsShuffler;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.*;
@@ -10,7 +13,7 @@ public class FlashcardShufflerTests {
 
     @Test
     public void shouldNotShuffleWithTooFewRounds() {
-        FlashcardsShuffler shuffler = new FlashcardsShuffler();
+        SimpleFlashcardsShuffler shuffler = new SimpleFlashcardsShuffler();
         Flashcard[] flashcards = generateFirstNFlashcards(10);
         Exception exception = assertThrows(IllegalArgumentException.class,
                 () -> shuffler.shuffle(flashcards, 0));
@@ -19,7 +22,7 @@ public class FlashcardShufflerTests {
 
     @Test
     public void shouldShuffleCards() {
-        FlashcardsShuffler shuffler = new FlashcardsShuffler();
+        SimpleFlashcardsShuffler shuffler = new SimpleFlashcardsShuffler();
         Flashcard[] flashcards = generateFirstNFlashcards(10);
         displayFlashcards(flashcards);
         Flashcard firstFlashcardBeforeShuffle = flashcards[0];
@@ -34,7 +37,7 @@ public class FlashcardShufflerTests {
         int count = n - 1;
         Flashcard[] flashcards = new Flashcard[n];
         while(count >= 0) {
-            Flashcard flashcard = new Flashcard(new Objective("objective #" + (count + 1)),
+            Flashcard flashcard = new Flashcard("objective #" + (count + 1),
                                                 new Explanation("explanation #" + (count + 1)));
             flashcards[count] = flashcard;
             count--;
@@ -46,7 +49,7 @@ public class FlashcardShufflerTests {
         System.out.print("[ ");
         for(int i = 0; i < flashcards.length; i++) {
             Flashcard flashcard = flashcards[i];
-            System.out.print("Flashcard: " + flashcard.getObjectiveContent() + " | " + flashcard.getExplanationContent());
+            System.out.print("Flashcard: " + flashcard.getObjective() + " | " + flashcard.getExplanations());
             if(i < flashcards.length - 1) System.out.print(", ");
         }
         System.out.println(" ]");

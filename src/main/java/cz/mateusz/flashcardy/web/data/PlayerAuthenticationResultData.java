@@ -1,6 +1,6 @@
 package cz.mateusz.flashcardy.web.data;
 
-public class PlayerAuthenticationResultData {
+public class PlayerAuthenticationResultData implements Data {
 
     private boolean authenticated;
 
